@@ -1,0 +1,82 @@
+version: '3'
+
+services:
+
+  workspace:
+    hostname: workspace
+    build:
+      context: ./workspace
+      args:
+        - PHP_VERSION=${PHP_VERSION}
+    volumes:
+      - ${APPLICATION_DIRECTORY}:/var/www
+    networks:
+      - php-frontend
+      - php-backend
+
+  nginx:
+    hostname: nginx
+    build: ./nginx
+    volumes:
+      - ${APPLICATION_DIRECTORY}:/var/www
+      - ${NGINX_CONFIG_PATH}:/etc/nginx/conf.d/
+    ports:
+      - "${NGINX_HOST_HTTP_PORT}:80"
+      - "${NGINX_HOST_HTTPS_PORT}:443"
+    depends_on:
+      - php-fpm
+    networks:
+      - php-frontend
+      - php-backend
+
+  php-fpm:
+    hostname: php-fpm
+    image: php-fpm:${PHP_VERSION}
+    build:
+      context: ./php-fpm
+      args:
+        - PHP_VERSION=${PHP_VERSION}
+    volumes:
+      - ./php-fpm/config/php.ini:/usr/local/etc/php/php.ini
+      - ${APPLICATION_DIRECTORY}:/var/www
+    expose:
+      - "9000"
+    networks:
+      - php-backend
+
+  mysql:
+    hostname: mysql
+    build: ./mysql
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ${DATA_SAVE_PATH}/mysql:/var/lib/mysql
+    ports:
+      - "${MYSQL_PORT}:3306"
+    networks:
+      - php-backend
+
+  redis:
+    hostname: redis
+    build: ./redis
+    image: redis:latest
+    volumes:
+      - ${DATA_SAVE_PATH}/redis:/data
+    ports:
+      - "${REDIS_PORT}:6379"
+    networks:
+      - php-backend
+
+networks:
+  php-frontend:
+    driver: "bridge"
+  php-backend:
+    driver: "bridge"
+
+volumes:
+  mysql:
+    driver: "local"
+  redis:
+    driver: "local"
