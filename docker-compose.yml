@@ -51,7 +51,6 @@ services:
     cap_add:
       - SYS_NICE
     environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - ${DATA_SAVE_PATH}/mysql:/var/lib/mysql
