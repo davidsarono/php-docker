@@ -1,13 +1,12 @@
 ARG PHP_VERSION
-FROM php:${PHP_VERSION}-fpm
+
+FROM arm64v8/php:${PHP_VERSION}-fpm
 
 RUN apt-get update && \
   apt-get install -y  tzdata \
+    build-essential \
     openssl \
     libssl-dev \
-    build-essential \
-    libfreetype6 \
-    libjpeg62-turbo \
     libfreetype6-dev \
     libpng-dev \
     libjpeg62-turbo-dev \
@@ -56,5 +55,6 @@ RUN usermod -u 1000 www-data
 
 WORKDIR /var/www
 
-EXPOSE 9000
 CMD ["php-fpm"]
+
+EXPOSE 9000

@@ -1,30 +1,27 @@
-# The MySQL  Client configuration file.
-#
-# For explanations see
-# http://dev.mysql.com/doc/mysql/en/server-system-variables.html
-
 [client]
 port                                                                            = 3306
 socket                                                                          = /var/run/mysqld/mysqld.sock
+
 
 [mysql]
 no-auto-rehash
 auto-rehash
 default-character-set                                                           = utf8mb4
 
+
 [mysqld]
-######### basic settings
+########basic settings########
 server-id                                                                       = 2
 pid-file                                                                        = /var/run/mysqld/mysqld.pid
 socket                                                                          = /var/run/mysqld/mysqld.sock
 datadir                                                                         = /var/lib/mysql
 #log-error                                                                      = /var/lib/mysql/error.log
-######### By default we only accept connections from localhost
+#By default we only accept connections from localhost
 #bind-address                                                                   = 127.0.0.1
-######### Disabling symbolic-links is recommended to prevent assorted security risks
+#Disabling symbolic-links is recommended to prevent assorted security risks
 symbolic-links                                                                  = 0
 character-set-server                                                            = utf8mb4
-#sql_mode                                                                       = "NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+sql_mode                                                                        = "NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 default-storage-engine                                                          = INNODB
 transaction_isolation                                                           = READ-COMMITTED
 auto_increment_offset                                                           = 1
@@ -42,15 +39,16 @@ tmp_table_size                                                                  
 explicit_defaults_for_timestamp                                                 = 1
 read_buffer_size                                                                = 16M
 read_rnd_buffer_size                                                            = 32M
-#query_cache_type                                                                = 1
-#query_cache_size                                                                = 2M
+query_cache_type                                                                = 1
+query_cache_size                                                                = 2M
 table_open_cache                                                                = 1500
 table_definition_cache                                                          = 1000
 thread_cache_size                                                               = 768
 back_log                                                                        = 3000
 open_files_limit                                                                = 65536
 skip-name-resolve
-######### log settings
+
+########log settings########
 log-output                                                                      = FILE
 general_log                                                                     = ON
 general_log_file                                                                = /var/lib/mysql/general.log
@@ -62,7 +60,8 @@ log_queries_not_using_indexes                                                   
 log_throttle_queries_not_using_indexes                                          = 0
 #expire_logs_days                                                               = 120
 min_examined_row_limit                                                          = 100
-######### innodb settings
+
+########innodb settings########
 innodb_io_capacity                                                              = 2000
 innodb_io_capacity_max                                                          = 4000
 innodb_buffer_pool_size                                                         = 4G
@@ -73,14 +72,14 @@ innodb_buffer_pool_dump_at_shutdown                                             
 innodb_log_file_size                                                            = 300M
 innodb_log_files_in_group                                                       = 2 
 innodb_log_buffer_size                                                          = 16M
-#innodb_undo_logs                                                                = 128
+innodb_undo_logs                                                                = 128
 #innodb_undo_tablespaces                                                        = 3
 #innodb_undo_log_truncate                                                       = 1
 #innodb_max_undo_log_size                                                       = 2G
 innodb_flush_method                                                             = O_DIRECT
 innodb_flush_neighbors                                                          = 1
 innodb_purge_threads                                                            = 4
-#innodb_large_prefix                                                             = 1
+innodb_large_prefix                                                             = 1
 innodb_thread_concurrency                                                       = 64
 innodb_print_all_deadlocks                                                      = 1
 innodb_strict_mode                                                              = 1
@@ -115,4 +114,3 @@ innodb_adaptive_max_sleep_delay                                                 
 #innodb_additional_mem_pool_size                                                = 2097152
 innodb_autoextend_increment                                                     = 64
 innodb_autoinc_lock_mode                                                        = 1
-secure-file-priv                                                                = /var/lib/mysql

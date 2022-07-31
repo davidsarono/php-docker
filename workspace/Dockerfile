@@ -1,4 +1,4 @@
-FROM phusion/baseimage:impish
+FROM --platform=linux/amd64 phusion/baseimage:master
 
 ARG PHP_VERSION
 ENV PHP_VERSION ${PHP_VERSION}
@@ -36,13 +36,9 @@ RUN apt-get update && \
         libssl-dev \
         libxml2-dev \
         xz-utils \
-        libsqlite3-dev \
-        sqlite3 \
         git \
         curl \
         vim \
-        nano \
-        postgresql-client \
         libgflags-dev \
         libgtest-dev \
         clang \

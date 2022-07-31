@@ -1,1 +1,4 @@
+mysql/*.sql
+redis/*.conf
 .env
+.DS_Store
